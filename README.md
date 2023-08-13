@@ -1,6 +1,9 @@
 # FortressLoot
 Simulate Fortress Generation and loot in Minecraft 1.14-1.17 using a cleaned up version of Mojang's source code.
 
+Requires external seedfinding libraries:                                    
+https://github.com/SeedFinding
+
 # Installation
 Add the following to your gradle dependencies:
 
