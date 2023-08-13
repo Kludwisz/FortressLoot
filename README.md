@@ -7,7 +7,8 @@ Add the following to your gradle dependencies:
 implementation 'com.github.Kludwisz:FortressLoot:master-SNAPSHOT'
 
 And make sure to have jitpack included in the repositories:
-repositories {
-    mavenCentral()
-    maven { url "https://www.jitpack.io" }
+
+repositories {                                                               
+    mavenCentral()                                                          
+    maven { url "https://www.jitpack.io" }                                    
 }
