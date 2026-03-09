@@ -12,8 +12,6 @@ import com.seedfinding.mccore.version.MCVersion;
 import com.seedfinding.mcseed.rand.JRand;
 
 public class StaticFortressGenerator {
-
-
     // ------------------------------------------------------------
     // Fort generation - GENERAL
     // ------------------------------------------------------------
@@ -181,11 +179,7 @@ public class StaticFortressGenerator {
         @Override
         public BPos getChestPos() {
             if (!this.isNeedingChest) return null;
-
-            CoordinateTransformer.setParams(this.orientation, this.boundingBox);
-            BPos chestPos = CoordinateTransformer.getWorldPos(3, 2, 3);
-
-            return chestPos;
+            return new CoordinateTransformer(this.orientation, this.boundingBox).getWorldPos(3, 2, 3);
         }
     }
 
@@ -211,11 +205,7 @@ public class StaticFortressGenerator {
         @Override
         public BPos getChestPos() {
             if (!this.isNeedingChest) return null;
-
-            CoordinateTransformer.setParams(this.orientation, this.boundingBox);
-            BPos chestPos = CoordinateTransformer.getWorldPos(1, 2, 3);
-
-            return chestPos;
+            return new CoordinateTransformer(this.orientation, this.boundingBox).getWorldPos(1, 2, 3);
         }
     }
 
@@ -304,9 +294,7 @@ public class StaticFortressGenerator {
 
         @Override
         public BPos getSpawnerPos() {
-            CoordinateTransformer.setParams(this.orientation, this.boundingBox);
-            BPos spawnerPos = CoordinateTransformer.getWorldPos(3, 5, 5);
-            return spawnerPos;
+            return new CoordinateTransformer(this.orientation, this.boundingBox).getWorldPos(3, 5, 5);
         }
 
         public void addChildren(Piece var1, List<Piece> var2, JRand var3) {
