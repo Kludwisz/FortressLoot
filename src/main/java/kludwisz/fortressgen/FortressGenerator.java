@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class FortressGenerator {
+    final StaticFortressGenerator.PieceWeight[] BRIDGE_PIECE_WEIGHTS = new StaticFortressGenerator.PieceWeight[]{new StaticFortressGenerator.PieceWeight(StaticFortressGenerator.BridgeStraight.class, 30, 0, true), new StaticFortressGenerator.PieceWeight(StaticFortressGenerator.BridgeCrossing.class, 10, 4), new StaticFortressGenerator.PieceWeight(StaticFortressGenerator.RoomCrossing.class, 10, 4), new StaticFortressGenerator.PieceWeight(StaticFortressGenerator.StairsRoom.class, 10, 3), new StaticFortressGenerator.PieceWeight(StaticFortressGenerator.MonsterThrone.class, 5, 2), new StaticFortressGenerator.PieceWeight(StaticFortressGenerator.CastleEntrance.class, 5, 1)};
+    final StaticFortressGenerator.PieceWeight[] CASTLE_PIECE_WEIGHTS = new StaticFortressGenerator.PieceWeight[]{new StaticFortressGenerator.PieceWeight(StaticFortressGenerator.CastleSmallCorridorPiece.class, 25, 0, true), new StaticFortressGenerator.PieceWeight(StaticFortressGenerator.CastleSmallCorridorCrossingPiece.class, 15, 5), new StaticFortressGenerator.PieceWeight(StaticFortressGenerator.CastleSmallCorridorRightTurnPiece.class, 5, 10), new StaticFortressGenerator.PieceWeight(StaticFortressGenerator.CastleSmallCorridorLeftTurnPiece.class, 5, 10), new StaticFortressGenerator.PieceWeight(StaticFortressGenerator.CastleCorridorStairsPiece.class, 10, 3, true), new StaticFortressGenerator.PieceWeight(StaticFortressGenerator.CastleCorridorTBalconyPiece.class, 7, 2), new StaticFortressGenerator.PieceWeight(StaticFortressGenerator.CastleStalkRoom.class, 5, 2)};
+
     public final ArrayList<StaticFortressGenerator.Piece> pieces;
     public StaticFortressGenerator.StartPiece start;
     public BlockBox fortressBoundingBox;

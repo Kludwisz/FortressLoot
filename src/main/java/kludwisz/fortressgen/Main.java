@@ -16,7 +16,22 @@ public class Main {
 	public static final ChunkRand rand = new ChunkRand();
 	
 	public static void main(String [] args) {
-		test(12345L, new CPos(-68, -89));
+		Thread[] threads = new Thread[10];
+		for (int i=0; i<threads.length; i++) {
+			threads[i] = new Thread(() -> {
+				for (long v = 12345; v < 12345 + 3; v++)
+					test(v, new CPos(-68, -89));
+			});
+			threads[i].start();
+		}
+
+		 for (Thread t : threads) {
+			 try {
+				 t.join();
+			 } catch (InterruptedException e) {
+				 e.printStackTrace();
+			 }
+		 }
 	}
 	
 	// for in-game testing
@@ -26,18 +41,20 @@ public class Main {
 		
 		List<Pair<BPos, Long>> chests = gen.getChestPositionsWithLootseeds(rand, MCVersion.v1_16_1);
 		for (Pair<BPos, Long> p : chests) {
-			System.out.println("/tp " + p.getFirst().getX() + " " + p.getFirst().getY() + " " + p.getFirst().getZ());
+			//System.out.println("/tp " + p.getFirst().getX() + " " + p.getFirst().getY() + " " + p.getFirst().getZ());
 			LootContext ctx = new LootContext(p.getSecond());
 			List<ItemStack> items = MCLootTables.NETHER_BRIDGE_CHEST.get().generate(ctx);
 			for (ItemStack is : items) {
-				System.out.println(is.getItem().getName() + " " + is.getCount());
+				//System.out.println(is.getItem().getName() + " " + is.getCount());
 			}
 		}
-		
-		List<BPos> spawners = gen.getSpawnerPositions();
-		System.out.println("\n\nSpawners");
-		for (BPos b : spawners) {
-			System.out.println("/tp " + b.getX() + " " + b.getY() + " " + b.getZ());
+
+		synchronized (System.out) {
+			List<BPos> spawners = gen.getSpawnerPositions();
+			System.out.println("\n\nSpawners");
+			for (BPos b : spawners) {
+				System.out.println("/tp " + b.getX() + " " + b.getY() + " " + b.getZ());
+			}
 		}
 		
 		// findDecoSalt();

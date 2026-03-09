@@ -12,8 +12,7 @@ import com.seedfinding.mccore.version.MCVersion;
 import com.seedfinding.mcseed.rand.JRand;
 
 public class StaticFortressGenerator {
-    private static final PieceWeight[] BRIDGE_PIECE_WEIGHTS = new PieceWeight[]{new PieceWeight(StaticFortressGenerator.BridgeStraight.class, 30, 0, true), new PieceWeight(StaticFortressGenerator.BridgeCrossing.class, 10, 4), new PieceWeight(StaticFortressGenerator.RoomCrossing.class, 10, 4), new PieceWeight(StaticFortressGenerator.StairsRoom.class, 10, 3), new PieceWeight(StaticFortressGenerator.MonsterThrone.class, 5, 2), new PieceWeight(StaticFortressGenerator.CastleEntrance.class, 5, 1)};
-    private static final PieceWeight[] CASTLE_PIECE_WEIGHTS = new PieceWeight[]{new PieceWeight(StaticFortressGenerator.CastleSmallCorridorPiece.class, 25, 0, true), new PieceWeight(StaticFortressGenerator.CastleSmallCorridorCrossingPiece.class, 15, 5), new PieceWeight(StaticFortressGenerator.CastleSmallCorridorRightTurnPiece.class, 5, 10), new PieceWeight(StaticFortressGenerator.CastleSmallCorridorLeftTurnPiece.class, 5, 10), new PieceWeight(StaticFortressGenerator.CastleCorridorStairsPiece.class, 10, 3, true), new PieceWeight(StaticFortressGenerator.CastleCorridorTBalconyPiece.class, 7, 2), new PieceWeight(StaticFortressGenerator.CastleStalkRoom.class, 5, 2)};
+
 
     // ------------------------------------------------------------
     // Fort generation - GENERAL
@@ -31,7 +30,7 @@ public class StaticFortressGenerator {
         gen.structseed = structureSeed;
         rand.setCarverSeed(structureSeed, chunkX, chunkZ, MCVersion.v1_16_1);
 
-        gen.start = new StaticFortressGenerator.StartPiece(rand, (chunkX << 4) + 2, (chunkZ << 4) + 2);
+        gen.start = new StaticFortressGenerator.StartPiece(gen, (chunkX << 4) + 2, (chunkZ << 4) + 2);
         gen.pieces.add(gen.start);
         gen.start.addChildren(gen.start, gen.pieces, rand);
         List<Piece> pieceQueue = gen.start.pendingChildren;
@@ -421,10 +420,10 @@ public class StaticFortressGenerator {
         public List<PieceWeight> availableCastlePieces;
         public final List<Piece> pendingChildren = new ArrayList<>();
 
-        public StartPiece(JRand var1, int var2, int var3) {
-            super(var1, var2, var3);
+        public StartPiece(FortressGenerator gen, int var2, int var3) {
+            super(gen.rand, var2, var3);
             this.availableBridgePieces = new ArrayList<>();
-            PieceWeight[] var4 = StaticFortressGenerator.BRIDGE_PIECE_WEIGHTS;
+            PieceWeight[] var4 = gen.BRIDGE_PIECE_WEIGHTS;
             int var5 = var4.length;
 
             int var6;
@@ -436,7 +435,7 @@ public class StaticFortressGenerator {
             }
 
             this.availableCastlePieces = new ArrayList<>();
-            var4 = StaticFortressGenerator.CASTLE_PIECE_WEIGHTS;
+            var4 = gen.CASTLE_PIECE_WEIGHTS;
             var5 = var4.length;
 
             for (var6 = 0; var6 < var5; ++var6) {
@@ -444,7 +443,6 @@ public class StaticFortressGenerator {
                 var7.placeCount = 0;
                 this.availableCastlePieces.add(var7);
             }
-
         }
     }
 
