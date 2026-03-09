@@ -1,6 +1,7 @@
 package kludwisz.fortressgen;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.seedfinding.mccore.rand.ChunkRand;
 import com.seedfinding.mccore.util.data.Pair;
@@ -20,10 +21,10 @@ public class Main {
 	
 	// for in-game testing
 	public static void test(long structseed, CPos fortPos) {
-		if (!FortressGenerator.generateFortress(12345L, fortPos.getX(), fortPos.getZ(), rand, false))
-			return;
+		FortressGenerator gen = new FortressGenerator();
+		gen.generate(structseed, fortPos.getX(), fortPos.getZ(), false);
 		
-		List<Pair<BPos, Long>> chests = FortressGenerator.getChestPositionsWithLootseeds(rand, MCVersion.v1_16_1);
+		List<Pair<BPos, Long>> chests = gen.getChestPositionsWithLootseeds(rand, MCVersion.v1_16_1);
 		for (Pair<BPos, Long> p : chests) {
 			System.out.println("/tp " + p.getFirst().getX() + " " + p.getFirst().getY() + " " + p.getFirst().getZ());
 			LootContext ctx = new LootContext(p.getSecond());
@@ -33,7 +34,7 @@ public class Main {
 			}
 		}
 		
-		List<BPos> spawners = FortressGenerator.getSpawnerPositions();
+		List<BPos> spawners = gen.getSpawnerPositions();
 		System.out.println("\n\nSpawners");
 		for (BPos b : spawners) {
 			System.out.println("/tp " + b.getX() + " " + b.getY() + " " + b.getZ());
@@ -54,12 +55,12 @@ public class Main {
 			List<ItemStack> items = MCLootTables.NETHER_BRIDGE_CHEST.get().generate(ctx);
 			int fitness = 0;
 			for (ItemStack is : items) {
-				if (is.getItem().getName() == "golden_horse_armor") {
+				if (Objects.equals(is.getItem().getName(), "golden_horse_armor")) {
 					if (is.getCount() != 1)
 						break;
 					fitness++;
 				}
-				else if (is.getItem().getName() == "saddle") {
+				else if (Objects.equals(is.getItem().getName(), "saddle")) {
 					if (is.getCount() != 1)
 						break;
 					fitness++;
